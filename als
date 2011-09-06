@@ -13,7 +13,7 @@ for (key, val,) in opts:
   if key == "-t" or key == "--type":
     type0 = val
 
-# Long ones precede (e.g.: "cpio.gz" -> "gz")
+# Long ones precede (e.g.: "cpio.gz" > "gz")
 cmds = {}
 cmds["ama"] = 'appmod arc geo "%s"'
 cmds["a"] = 'ar tv "%s"'
