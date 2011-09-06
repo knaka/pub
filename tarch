@@ -1,0 +1,94 @@
+#!/usr/bin/python
+
+### Twitter archiver
+
+### http://dev.twitter.com/doc
+
+import ConfigParser
+import twitter
+import sys
+import os
+import time
+
+conf_path = os.path.join(os.path.dirname(sys.argv[0]), 'tarch.conf')
+conf = ConfigParser.SafeConfigParser({
+  'uid': 'knaka',
+  'last_sid': '-1',
+  'archpath_template': '/tmp/%%Y%%m00tweets.txt',
+  'toffset': '+9',
+  'fail_count': '0',
+})
+conf.read(conf_path)
+## User ID for Twitter
+uid = conf.get('DEFAULT', 'uid')
+## Last archived Twitter status ID
+last_sid = conf.getint('DEFAULT', 'last_sid')
+archpath_template = conf.get('DEFAULT', 'archpath_template')
+## Timezone offset
+toffset = conf.getint('DEFAULT', 'toffset')
+fail_count = conf.getint('DEFAULT', 'fail_count')
+
+import HTMLParser
+h = HTMLParser.HTMLParser()
+
+t = twitter.Twitter()
+try:
+  stats = \
+   t.statuses.user_timeline(id = uid, include_rts = True)
+except:
+  fail_count += 1
+  if fail_count > 16:
+    fail_count = 0
+    conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
+    with open(conf_path, 'wb') as output:
+      conf.write(output)
+    raise
+  conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
+  with open(conf_path, 'wb') as output:
+    conf.write(output)
+  sys.exit(0)
+stats.reverse()
+for stat in stats:
+  sid = stat['id']
+  if sid <= last_sid: # Skip already managed stat
+    continue
+  ## RT
+  if stat.has_key('retweeted_status'):
+    url = u'http://twitter.com/%s/status/%s' % (
+     stat['retweeted_status']['user']['screen_name'], 
+     stat['retweeted_status']['id'], )
+    text = u'RT @%s: %s' % (
+     stat['retweeted_status']['user']['screen_name'],
+     stat['retweeted_status']['text'], )
+  ## Others
+  else:
+    url = u'http://twitter.com/%s/status/%s' % (
+     stat['user']['screen_name'],
+     stat['id'], )
+    text = stat['text']
+  ## All stats can have reply_to info
+  if stat['in_reply_to_status_id']:
+    repurl = u'http://twitter.com/%s/status/%s' % (
+     stat['in_reply_to_screen_name'],
+     stat['in_reply_to_status_id'], )
+  else:
+    repurl = u''
+  text = h.unescape(text) # "text" is in HTML (XML?) escaped
+  try:
+    import codecs
+    tcreated = time.strptime(stat['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
+    tcreated = time.localtime(time.mktime(tcreated) + toffset * 60 * 60)
+    archpath = time.strftime(archpath_template, tcreated)
+    output = codecs.getwriter('UTF-8')(open(archpath, 'a'))
+    #print u'%s %s %s' % (url, repurl, text,)
+    output.write(u"%s\t%s\t%s\n" % (url, repurl, text,))
+    output.close()
+  except:
+    raise
+  else:
+    last_sid = sid
+    conf.set("DEFAULT", 'last_sid', '%d' % (last_sid,))
+    fail_count = 0
+    conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
+    with open(conf_path, 'wb') as output:
+      conf.write(output)
