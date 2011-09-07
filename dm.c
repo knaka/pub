@@ -1,5 +1,9 @@
+/*
+ * Binary dumper.
+ */
+
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 #include <stdlib.h>
 
 #define Step 16
