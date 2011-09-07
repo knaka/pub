@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+uname = 'knaka'
+
+# --------------------------------------------------------------------
+
+import sys, locale, codecs
+lang, enc = locale.getdefaultlocale()
+if not sys.stdin.encoding: sys.stdin = codecs.getreader(enc)(sys.stdin)
+if not sys.stdout.encoding: sys.stdout = codecs.getwriter(enc)(sys.stdout)
+if not sys.stderr.encoding: sys.stderr = codecs.getwriter(enc)(sys. stderr)
+
+# --------------------------------------------------------------------
+
+# API Documentation http://dev.twitter.com/doc
+import twitter
+import tauthinfo
+conskey = tauthinfo.conskey
+reqtok = tauthinfo.reqtoks[uname]
+oauth = twitter.oauth.OAuth(reqtok['id'], reqtok['secret'],
+ conskey['id'], conskey['secret'] )
+t = twitter.Twitter(domain = 'api.twitter.com', api_version = '1',
+ auth = oauth )
+t.statuses.update(status = sys.argv[1].decode(enc))

@@ -1,0 +1,111 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+main_uname = 'knaka'
+langs = ('en', 'zh',)
+
+#debug = True
+debug = False
+
+# --------------------------------------------------------------------
+
+import sys
+extenc = sys.stdin.encoding
+if not extenc:
+  import codecs
+  import platform
+  extenc = {
+    'Linux': 'UTF-8',
+    'Windows': 'CP932',
+  }.get(platform.system())
+  sys.stdin = codecs.getreader(extenc)(sys.stdin)
+  sys.stdout = codecs.getwriter(extenc)(sys.stdout)
+  sys.stderr = codecs.getwriter(extenc)(sys.stderr)
+
+# --------------------------------------------------------------------
+
+def mkSubId(lang):
+  return '%s_%s' % (main_uname, lang,)
+
+sub_unames = [mkSubId(lang) for lang in langs]
+
+def is_en_str(u):
+  ret = True
+  try:
+    u.encode("ASCII")
+  except UnicodeEncodeError, e:
+    ret = False
+  return ret
+
+kanachrs = u'ーぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ'
+
+def is_zh_str(u):
+  ret = True
+  try:
+    u.encode("GB18030")
+    for chr in u:
+      if chr in kanachrs:
+        ret = False
+        break
+  except UnicodeEncodeError, e:
+    ret = False
+  return ret
+    
+if __name__ == '__main__':
+  import hashlib
+  import twitter
+  t = tmain = twitter.Twitter()
+  # Fetch statuses
+  ids = {}
+  stats = {}
+  for uname in [main_uname] + sub_unames:
+    uinfo = t.users.show(id = uname)
+    ids[uname] = uinfo['id']
+    stats[uname] = \
+     t.statuses.user_timeline(id = uname, include_rts = True)
+    stats[uname].reverse()
+  t = None
+  # Make hash lists
+  hashes = {}
+  for uname in sub_unames:
+    hashes[uname] = []
+    for stat in stats[uname]:
+      if not stat.has_key('retweeted_status'):
+        text = stat['text']
+      else:
+        text = stat['retweeted_status']['text']
+      hash = hashlib.md5(text.encode("UTF-8"))
+      hashes[uname].append(hash.digest())
+  for lang in langs:
+    t = None
+    uname = mkSubId(lang)
+    id = ids[uname]
+    langchecker = globals()['is_%s_str' % (lang,)]
+    for stat in stats[main_uname]:
+      if not stat.has_key('retweeted_status'):
+        text = stat['text']
+      else:
+        text = stat['retweeted_status']['text']
+      hash = hashlib.md5(text.encode("UTF-8"))
+      if not hash.digest() in hashes[uname] and \
+       langchecker(text):
+        if not t and not debug:
+          import tauthinfo
+          conskey = tauthinfo.conskey
+          reqtok = tauthinfo.reqtoks[uname]
+          oauth = twitter.oauth.OAuth(reqtok['id'], reqtok['secret'],
+           conskey['id'], conskey['secret'] )
+          t = twitter.Twitter(domain = 'api.twitter.com', api_version = '1',
+           auth = oauth )
+          #print "Created"
+        if not stat.has_key('retweeted_status'):
+          if debug:
+            print "%s posts: %s" % (uname, text,)
+          else:
+            t.statuses.update(status = text)
+        else:
+          sid = stat['retweeted_status']['id']
+          if debug:
+            print "%s retweets %d: %s" % (uname, sid, text,)
+          else:
+            t.statuses.retweet(id = sid)
