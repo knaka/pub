@@ -29,6 +29,7 @@ def mkSubId(lang):
 
 sub_unames = [mkSubId(lang) for lang in langs]
 
+## The strings only of ASCII characters would be English
 def is_en_str(u):
   ret = True
   try:
@@ -37,8 +38,15 @@ def is_en_str(u):
     ret = False
   return ret
 
-kanachrs = u'ーぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ'
+kanachrs = \
+ u'ーぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞ' + \
+ u'ただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽ' + \
+ u'まみむめもゃやゅゆょよらりるれろゎわゐゑをん' + \
+ u'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾ' + \
+ u'タダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポ' + \
+ u'マミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ'
 
+## The strings which do not contain Kana characters would be Chinese ...
 def is_zh_str(u):
   ret = True
   try:
