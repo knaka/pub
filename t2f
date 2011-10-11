@@ -1,0 +1,112 @@
+#!/usr/bin/python
+
+### Twitter to Facebook
+
+### http://dev.twitter.com/doc
+
+FailCountThre = 10
+
+import ConfigParser
+import sys
+import os
+import time
+
+## Python Twitter Tools http://mike.verdone.ca/twitter/
+## https://github.com/sixohsix/twitter/
+## UTF-8 fix: https://github.com/knaka/twitter/
+import twitter
+
+conf_path = os.path.join(os.path.dirname(sys.argv[0]), 't2f.conf')
+conf = ConfigParser.SafeConfigParser({
+  'uid': 'knaka',
+  'last_sid': '-1', # Last status ID already read
+  'archpath_template': '/tmp/%%Y%%m00tweets.txt',
+  'toffset': '+9', # Fetched data uses GMT
+  'fail_count': '0',
+})
+conf.read(conf_path)
+## User ID for Twitter
+uid = conf.get('DEFAULT', 'uid')
+## Last archived Twitter status ID
+last_sid = conf.getint('DEFAULT', 'last_sid')
+archpath_template = conf.get('DEFAULT', 'archpath_template')
+## Timezone offset
+toffset = conf.getint('DEFAULT', 'toffset')
+fail_count = conf.getint('DEFAULT', 'fail_count')
+
+import HTMLParser
+h = HTMLParser.HTMLParser()
+
+def expand_tco_url(murl):
+  import urllib
+  input = urllib.urlopen(murl.group(0))
+  return input.url
+
+t = twitter.Twitter()
+try:
+  stats = t.statuses.user_timeline(id = uid, include_rts = True)
+except:
+  fail_count += 1
+  if fail_count > FailCountThre:
+    fail_count = 0
+    conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
+    ## What's New in Python 2.5 ? Python v2.7.2 documentation 
+    ## http://docs.python.org/whatsnew/2.5.html
+    with open(conf_path, 'wb') as output:
+      conf.write(output)
+    raise
+  conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
+  with open(conf_path, 'wb') as output:
+    conf.write(output)
+  sys.exit(0)
+stats.reverse() # Destructive
+for stat in stats:
+  sid = stat['id'] # Stat ID
+  if sid <= last_sid: # Skip stats already read
+    continue
+  ## It is a RT
+  if stat.has_key('retweeted_status'):
+    continue
+  ## The others
+  else:
+    url = u'http://twitter.com/%s/status/%s' % (
+     stat['user']['screen_name'],
+     stat['id'], )
+    text = stat['text']
+  ## Replies
+  if text[0] == "@":
+    continue
+  ## All stats can have reply_to info
+  if stat['in_reply_to_status_id']:
+    repurl = u'http://twitter.com/%s/status/%s' % (
+     stat['in_reply_to_screen_name'],
+     stat['in_reply_to_status_id'], )
+  else:
+    repurl = u''
+  text = h.unescape(text) # "text" is in escaped HTML (XML?)
+  try:
+    import urllib
+    import json
+    import fauthinfo
+    import re
+    url = 'https://graph.facebook.com/%d/feed' % (fauthinfo.uid,)
+    text = re.sub(r'http://t.co/[a-zA-Z]+', expand_tco_url, text)
+    values = {
+      'access_token': fauthinfo.access_token,
+      'message': text.encode('UTF-8'),
+    }
+    data = urllib.urlencode(values)
+    input = urllib.urlopen(url, data)
+    lines = input.readlines()
+    d = json.loads(''.join(lines))
+    if d.has_key(u'error'):
+      raise BaseException, "Facebook error " + str(d)
+  except: # Maybe I/O exceptions
+    raise
+  else:
+    last_sid = sid
+    conf.set("DEFAULT", 'last_sid', '%d' % (last_sid,))
+    fail_count = 0
+    conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
+    with open(conf_path, 'wb') as output:
+      conf.write(output)
