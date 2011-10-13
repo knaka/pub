@@ -90,7 +90,7 @@ for stat in stats:
     import fauthinfo
     import re
     url = 'https://graph.facebook.com/%d/feed' % (fauthinfo.uid,)
-    text = re.sub(r'http://t.co/[a-zA-Z]+', expand_tco_url, text)
+    text = re.sub(r'http://t.co/[a-zA-Z0-9_]+', expand_tco_url, text)
     values = {
       'access_token': fauthinfo.access_token,
       'message': text.encode('UTF-8'),
