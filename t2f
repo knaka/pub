@@ -4,7 +4,7 @@
 
 ### http://dev.twitter.com/doc
 
-FailCountThre = 10
+FailCountThre = 20
 
 import ConfigParser
 import sys
