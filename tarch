@@ -37,6 +37,11 @@ fail_count = conf.getint('DEFAULT', 'fail_count')
 import HTMLParser
 h = HTMLParser.HTMLParser()
 
+def expand_tco_url(murl):
+  import urllib
+  input = urllib.urlopen(murl.group(0))
+  return input.url
+
 t = twitter.Twitter()
 try:
   stats = t.statuses.user_timeline(id = uid, include_rts = True)
@@ -83,6 +88,8 @@ for stat in stats:
   text = h.unescape(text) # "text" is in escaped HTML (XML?)
   try:
     import codecs
+    import re
+    text = re.sub(r'http://t.co/[a-zA-Z0-9_]+', expand_tco_url, text)
     ## GMT time str to GMT time struct
     tcreated = time.strptime(stat['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
     ## GMT time struct to local epoch to local time
