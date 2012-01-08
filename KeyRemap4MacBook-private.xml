@@ -405,21 +405,15 @@
   <not>TERMINAL</not>
   <autogen>--KeyToKey--
     KeyCode::G, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::FORWARD_DELETE,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_q_core
+    KeyCode::FORWARD_DELETE
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::H, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::DELETE,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_q_core
+    KeyCode::DELETE
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::M, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::ENTER,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_q_core
+    KeyCode::ENTER
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::V, VK_CONTROL | ModifierFlag::NONE,
