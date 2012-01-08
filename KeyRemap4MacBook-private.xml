@@ -14,6 +14,8 @@
 
 <!-- specific configurations first, generic ones later -->
 
+<!-- notsave.private.*_core items work as the second stroke key maps for 2-stroke key definitions -->
+
 <!-- ============================================================= -->
 <!-- Application Definitions -->
 <!-- ============================================================= -->
@@ -103,9 +105,9 @@
 <item>
   <name>Minimize and Maximize Screen</name>
   <identifier>private.minmax</identifier>
+  <!-- Full Screen -->
   <block>
     <only>TERMINAL</only>
-    <!--  -->
     <autogen>--KeyToKey--
       KeyCode::X, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
       KeyCode::F, VK_COMMAND | VK_OPTION | ModifierFlag::NONE
@@ -118,6 +120,11 @@
       KeyCode::F, VK_COMMAND | VK_CONTROL | ModifierFlag::NONE
     </autogen>
   </block>
+  <!-- Minimize -->
+  <autogen>--KeyToKey--
+    KeyCode::N, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
+    KeyCode::M, VK_COMMAND | ModifierFlag::NONE
+  </autogen>
 </item>
 
 <!-- ============================================================= -->
@@ -491,6 +498,14 @@
     KeyCode::ESCAPE, ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_space_core
   </autogen>
+  <block>
+    <only>GOOGLE_CHROME</only>
+    <autogen>--KeyToKey--
+      KeyCode::C, VK_OPTION | ModifierFlag::NONE,
+      KeyCode::W, VK_SHIFT | VK_COMMAND | ModifierFlag::NONE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_space_core
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::C, VK_OPTION | ModifierFlag::NONE,
     KeyCode::Q, VK_COMMAND,
