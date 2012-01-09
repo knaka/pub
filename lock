@@ -1,0 +1,4 @@
+#!/bin/sh
+# -*- coding: utf-8 -*-
+
+/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend &
