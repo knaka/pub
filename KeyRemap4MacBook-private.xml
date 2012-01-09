@@ -10,6 +10,7 @@
   http://pqrs.org/macosx/keyremap4macbook/xml.html
 
   /Library/org.pqrs/KeyRemap4MacBook/prefpane/checkbox.xml
+  /Library/org.pqrs/KeyRemap4MacBook/app/KeyRemap4MacBook.app/Contents/Resources/appdef.xml
 -->
 
 <!-- specific configurations first, generic ones later -->
@@ -49,6 +50,21 @@
 </item>
 
 <item>
+  <name>Chrome Option V Core</name>
+  <identifier vk_config="true">notsave.private.chrome_option_v_core</identifier>
+  <only>GOOGLE_CHROME</only>
+  <autogen>--KeyToKey--
+    KeyCode::V, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_v_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::R, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::R, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_v_core
+  </autogen>
+</item>
+
+<item>
   <name>Chrome</name>
   <identifier>private.chrome</identifier>
   <only>GOOGLE_CHROME</only>
@@ -56,6 +72,10 @@
   <autogen>--KeyToKey--
     KeyCode::S, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_chrome_option_s_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::V, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_ON_notsave_private_chrome_option_v_core
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::N, VK_CONTROL | ModifierFlag::NONE,
@@ -191,6 +211,30 @@
     KeyCode::ESCAPE, ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
+  <!-- Save -->
+  <autogen>--KeyToKey--
+    KeyCode::S, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::S, ModifierFlag::COMMAND_L,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
+  </autogen>
+  <!-- Save as -->
+  <autogen>--KeyToKey--
+    KeyCode::A, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::A, ModifierFlag::COMMAND_L,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
+  </autogen>
+  <!-- Open -->
+  <autogen>--KeyToKey--
+    KeyCode::O, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::O, ModifierFlag::COMMAND_L,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
+  </autogen>
+  <!-- New -->
+  <autogen>--KeyToKey--
+    KeyCode::N, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::N, ModifierFlag::COMMAND_L,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
+  </autogen>
   <!-- Close -->
   <autogen>--KeyToKey--
     KeyCode::C, VK_OPTION | ModifierFlag::NONE,
@@ -276,6 +320,12 @@
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_q_core
   </autogen>
+  <!-- Undo -->
+  <autogen>--KeyToKey--
+    KeyCode::U, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::Z, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_e_core
+  </autogen>
 </item>
 
 <item>
@@ -297,7 +347,27 @@
   <identifier vk_config="true">notsave.private.control_b_core</identifier>
   <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
+    KeyCode::G, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::FORWARD_DELETE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::H, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::DELETE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::M, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::ENTER,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core
+  </autogen>
+  <autogen>--KeyToKey--
     KeyCode::B, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::ESCAPE, ModifierFlag::NONE,
+    KeyCode::ESCAPE, ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core
   </autogen>
   <autogen>--KeyToKey--
@@ -477,10 +547,24 @@
     KeyCode::X, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::CURSOR_DOWN
   </autogen>
+  <block>
+    <only>XCODE</only>
+    <autogen>--KeyToKey--
+      KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_UP, VK_OPTION | ModifierFlag::FN | ModifierFlag::NONE
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::CURSOR_UP, ModifierFlag::FN | ModifierFlag::NONE
   </autogen>
+  <block>
+    <only>XCODE</only>
+    <autogen>--KeyToKey--
+      KeyCode::C, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_DOWN, VK_OPTION | ModifierFlag::FN | ModifierFlag::NONE
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::C, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::CURSOR_DOWN, ModifierFlag::FN | ModifierFlag::NONE
@@ -533,7 +617,7 @@
   </block>
   <autogen>--KeyToKey--
     KeyCode::C, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::Q, VK_COMMAND,
+    KeyCode::W, VK_COMMAND | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_space_core
   </autogen>
 </item>
@@ -545,6 +629,15 @@
   <autogen>--KeyToKey--
     KeyCode::SPACE, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_space_core
+  </autogen>
+</item>
+
+<item>
+  <name>Play to Shift F8</name>
+  <identifier>private.play_shift_f8</identifier>
+  <autogen>--ConsumerToKey--
+    ConsumerKeyCode::MUSIC_PLAY, ModifierFlag::NONE,
+    KeyCode::F8, VK_SHIFT | ModifierFlag::NONE
   </autogen>
 </item>
 
