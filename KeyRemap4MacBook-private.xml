@@ -2,7 +2,7 @@
 <root>
 
 <!-- Private Configuration for KeyRemap4MacBook -->
-
+    
 <!-- link to ~/Library/Application Support/KeyRemap4MacBook/private.xml -->
 
 <!--
@@ -21,10 +21,10 @@
 <!-- ============================================================= -->
 
 <appdef>
-  <appname>TERMINAL</appname>
-  <equal>com.apple.Terminal</equal>
+  <appname>VMWARE_SINGLE</appname>
+  <equal>com.vmware.fusion</equal>
 </appdef>
-  
+
 <!-- ============================================================= -->
 <!-- Chrome -->
 <!-- ============================================================= -->
@@ -114,7 +114,7 @@
     </autogen>
   </block>
   <block>
-    <not>TERMINAL</not>
+    <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
     <autogen>--KeyToKey--
       KeyCode::X, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
       KeyCode::F, VK_COMMAND | VK_CONTROL | ModifierFlag::NONE
@@ -134,8 +134,32 @@
 <item>
   <name>EISUU to Backquote</name>
   <identifier>private.eisuu2bq</identifier>
-  <autogen>--KeyToKey-- KeyCode::JIS_EISUU, KeyCode::BACKQUOTE</autogen>
+  <!-- IME On/Off -->
+  <block>
+    <only>VIRTUALMACHINE, VMWARE_SINGLE</only>
+    <autogen>--KeyToKey--
+      KeyCode::JIS_EISUU, VK_OPTION | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, VK_OPTION | ModifierFlag::NONE
+    </autogen>
+  </block>
+  <block>
+    <not>VIRTUALMACHINE, VMWARE_SINGLE</not>
+    <autogen>--KeyToKey--
+      KeyCode::JIS_EISUU, VK_OPTION | ModifierFlag::NONE,
+      KeyCode::SPACE, VK_COMMAND | ModifierFlag::NONE
+    </autogen>
+  </block>
+  <autogen>--KeyToKey--
+    KeyCode::JIS_EISUU, ModifierFlag::NONE,
+    KeyCode::BACKQUOTE, ModifierFlag::NONE
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::JIS_EISUU, VK_SHIFT | ModifierFlag::NONE,
+    KeyCode::BACKQUOTE, VK_SHIFT | ModifierFlag::NONE
+  </autogen>
 </item>
+
+<!-- KeyCode::F1, VK_SHIFT | ModifierFlag::NONE -->
 
 <!-- ============================================================= -->
 <!-- Previsous Window -->
@@ -144,6 +168,7 @@
 <item>
   <name>Previous Window</name>
   <identifier>private.prevwin</identifier>
+  <not>VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::TAB, VK_OPTION | ModifierFlag::NONE,
     KeyCode::TAB, VK_COMMAND | ModifierFlag::NONE
@@ -157,7 +182,7 @@
 <item>
   <name>Option F Core</name>
   <identifier vk_config="true">notsave.private.option_f_core</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::F, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
@@ -183,7 +208,7 @@
 <item>
   <name>Option F</name>
   <identifier>private.option_f</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::F, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_f_core
@@ -197,7 +222,7 @@
 <item>
   <name>Option E Core</name>
   <identifier vk_config="true">notsave.private.option_e_core</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::E, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_e_core
@@ -256,7 +281,7 @@
 <item>
   <name>Option E</name>
   <identifier>private.option_e</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::E, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_e_core
@@ -270,7 +295,7 @@
 <item>
   <name>Control B Core</name>
   <identifier vk_config="true">notsave.private.control_b_core</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::B, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_core
@@ -321,7 +346,7 @@
 <item>
   <name>Control Q Core</name>
   <identifier vk_config="true">notsave.private.control_q_core</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::Q, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
@@ -365,7 +390,7 @@
 <item>
   <name>Control B Q Core</name>
   <identifier vk_config="true">notsave.private.control_b_q_core</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::Q, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_q_core,
@@ -409,7 +434,7 @@
 <item>
   <name>Diamond Cursor</name>
   <identifier>private.diamond_cursor</identifier>
-  <not>TERMINAL</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::G, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::FORWARD_DELETE
@@ -516,6 +541,7 @@
 <item>
   <name>Option Space</name>
   <identifier>private.option_space</identifier>
+  <not>VIRTUALMACHINE, VMWARE_SINGLE</not>
   <autogen>--KeyToKey--
     KeyCode::SPACE, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_space_core
