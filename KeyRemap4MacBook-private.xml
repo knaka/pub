@@ -65,6 +65,28 @@
 </item>
 
 <item>
+  <name>Chrome Option G Core</name>
+  <identifier vk_config="true">notsave.private.chrome_option_g_core</identifier>
+  <only>GOOGLE_CHROME</only>
+  <autogen>--KeyToKey--
+    KeyCode::G, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_g_core
+  </autogen>
+  <!-- History Back -->
+  <autogen>--KeyToKey--
+    KeyCode::B, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::BRACKET_LEFT, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_g_core
+  </autogen>
+  <!-- History Forward -->
+  <autogen>--KeyToKey--
+    KeyCode::F, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::BRACKET_RIGHT, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_g_core
+  </autogen>
+</item>
+
+<item>
   <name>Chrome</name>
   <identifier>private.chrome</identifier>
   <only>GOOGLE_CHROME</only>
@@ -76,6 +98,10 @@
   <autogen>--KeyToKey--
     KeyCode::V, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_chrome_option_v_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::G, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_ON_notsave_private_chrome_option_g_core
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::N, VK_CONTROL | ModifierFlag::NONE,
@@ -214,37 +240,43 @@
   <!-- Save -->
   <autogen>--KeyToKey--
     KeyCode::S, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::S, ModifierFlag::COMMAND_L,
+    KeyCode::S, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
   <!-- Save as -->
   <autogen>--KeyToKey--
     KeyCode::A, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::A, ModifierFlag::COMMAND_L,
+    KeyCode::A, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
   <!-- Open -->
   <autogen>--KeyToKey--
     KeyCode::O, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::O, ModifierFlag::COMMAND_L,
+    KeyCode::O, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
   <!-- New -->
   <autogen>--KeyToKey--
     KeyCode::N, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::N, ModifierFlag::COMMAND_L,
+    KeyCode::N, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
   <!-- Close -->
   <autogen>--KeyToKey--
     KeyCode::C, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::W, ModifierFlag::COMMAND_L,
+    KeyCode::W, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
   <!-- Close -->
   <autogen>--KeyToKey--
     KeyCode::C, ModifierFlag::NONE,
-    KeyCode::W, ModifierFlag::COMMAND_L,
+    KeyCode::W, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
+  </autogen>
+  <!-- Quit -->
+  <autogen>--KeyToKey--
+    KeyCode::Q, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::Q, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
   </autogen>
 </item>
@@ -437,12 +469,12 @@
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::CURSOR_UP, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::CURSOR_LEFT, ModifierFlag::FN | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::C, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::CURSOR_DOWN, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::CURSOR_RIGHT, ModifierFlag::FN | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
   </autogen>
   <autogen>--KeyToKey--
@@ -585,6 +617,22 @@
     KeyCode::Q, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_control_q_core
   </autogen>
+  <!-- Tab -->
+  <block>
+    <only>EXCEL</only>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::PAGEDOWN, VK_CONTROL | ModifierFlag::NONE
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | VK_SHIFT | ModifierFlag::NONE,
+      KeyCode::PAGEUP, VK_CONTROL | ModifierFlag::NONE
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
+      KeyCode::PAGEUP, VK_CONTROL | ModifierFlag::NONE
+    </autogen>
+  </block>    
   <!-- Alternative for Shift-Control-TAB -->
   <autogen>--KeyToKey--
     KeyCode::TAB, ModifierFlag::CONTROL_L | ModifierFlag::OPTION_L,
