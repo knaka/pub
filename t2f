@@ -32,6 +32,8 @@ def fbpost(url, repurl, text, created_at, dic):
   if len(dic.values()) > 0:
     values["link"] = dic.values()[0];
   data = urllib.urlencode(values)
+  #print "About to post:", data
+  #return
   input = urllib.urlopen(url, data)
   lines = input.readlines()
   d = json.loads(''.join(lines))
@@ -40,6 +42,7 @@ def fbpost(url, repurl, text, created_at, dic):
 
 text_save = ""
 dic_save = {}
+delim = ""
 
 for stat in stats:
   sid = stat['id'] # Stat ID
@@ -47,6 +50,7 @@ for stat in stats:
     continue
   (url, repurl, text,) = twitter_utils.format_fields(stat)
   (text, dic,) = twitter_utils.expand_urls_in_text(text)
+  #print "d:", text
   text = text.strip()
   if len(text) == 0:
     continue
@@ -55,14 +59,18 @@ for stat in stats:
   if text[0] == "#":
     continue
   if text[-1] == "\\":
-    text_save = text_save + "" + text[:-1].strip()
+    text_save = text_save + delim + text[:-1].strip()
+    delim = "\n\n"
     if not dic_save:
       dic_save = dic
     continue
   elif text_save:
-    text = text_save + "" + text
+    text = text_save + delim + text
+    delim = "\n\n"
     dic = dic_save
+  #print "About to post:", text, dic
   fbpost(url, repurl, text, stat['created_at'], dic)
+  delim = ""
   text_save = ""
   dic_save = {}
   last_sid = sid

@@ -77,7 +77,7 @@ def expand_urls_in_text(text):
     expanded_urls[url] = expanded_url
     return expanded_url
   import re
-  text = re.sub(r'http://t.co/[a-zA-Z0-9_]+', expand_murl, text)
+  text = re.sub(r'https?://t.co/[a-zA-Z0-9_]+', expand_murl, text)
   return (text, expanded_urls,)
 
 import HTMLParser
