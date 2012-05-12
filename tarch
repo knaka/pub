@@ -1,109 +1,39 @@
 #!/usr/bin/python
 
-### Twitter archiver
+import twitter_utils
 
-### http://dev.twitter.com/doc
-
-FailCountThre = 20
-
-import ConfigParser
-import sys
 import os
-import time
+import sys
+conf = twitter_utils.Conf(
+ os.path.join(os.path.dirname(sys.argv[0]), 'tarch.conf') )
+(uid, last_sid, archpath_template, toffset,) = conf.read()
 
-## Python Twitter Tools http://mike.verdone.ca/twitter/
-## https://github.com/sixohsix/twitter/
-## UTF-8 fix: https://github.com/knaka/twitter/
-import twitter
-
-conf_path = os.path.join(os.path.dirname(sys.argv[0]), 'tarch.conf')
-conf = ConfigParser.SafeConfigParser({
-  'uid': 'knaka',
-  'last_sid': '-1', # Last status ID already read
-  'archpath_template': '/tmp/%%Y%%m00tweets.txt',
-  'toffset': '+9', # Fetched data uses GMT
-  'fail_count': '0',
-})
-conf.read(conf_path)
-## User ID for Twitter
-uid = conf.get('DEFAULT', 'uid')
-## Last archived Twitter status ID
-last_sid = conf.getint('DEFAULT', 'last_sid')
-archpath_template = conf.get('DEFAULT', 'archpath_template')
-## Timezone offset
-toffset = conf.getint('DEFAULT', 'toffset')
-fail_count = conf.getint('DEFAULT', 'fail_count')
-
-import HTMLParser
-h = HTMLParser.HTMLParser()
-
-def expand_tco_url(murl):
-  import urllib
-  input = urllib.urlopen(murl.group(0))
-  return input.url
-
-t = twitter.Twitter()
 try:
-  stats = t.statuses.user_timeline(id = uid, include_rts = True)
+  stats = twitter_utils.get_statuses(uid)
 except:
-  fail_count += 1
-  if fail_count > FailCountThre:
-    fail_count = 0
-    conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
-    ## What's New in Python 2.5 ? Python v2.7.2 documentation 
-    ## http://docs.python.org/whatsnew/2.5.html
-    with open(conf_path, 'wb') as output:
-      conf.write(output)
-    raise
-  conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
-  with open(conf_path, 'wb') as output:
-    conf.write(output)
+  conf.increment_failure()
+  import sys
   sys.exit(0)
-stats.reverse() # Destructive
+
+def append_status_line(archpath_template, url, repurl, text, created_at):
+  import time
+  ## GMT time str to GMT time struct
+  tcreated = time.strptime(created_at, '%a %b %d %H:%M:%S +0000 %Y')
+  ## GMT time struct to local epoch to local time
+  tcreated = time.localtime(time.mktime(tcreated) + toffset * 60 * 60)
+  archpath = time.strftime(archpath_template, tcreated)
+  import codecs
+  output = codecs.getwriter('UTF-8')(open(archpath, 'a'))
+  output.write(u"%s\t%s\t%s\n" % (url, repurl, text,))
+  output.close()
+
 for stat in stats:
   sid = stat['id'] # Stat ID
   if sid <= last_sid: # Skip stats already read
     continue
-  ## It is a RT
-  if stat.has_key('retweeted_status'):
-    url = u'http://twitter.com/%s/status/%s' % (
-     stat['retweeted_status']['user']['screen_name'], 
-     stat['retweeted_status']['id'], )
-    text = u'RT @%s: %s' % (
-     stat['retweeted_status']['user']['screen_name'],
-     stat['retweeted_status']['text'], )
-  ## The others
-  else:
-    url = u'http://twitter.com/%s/status/%s' % (
-     stat['user']['screen_name'],
-     stat['id'], )
-    text = stat['text']
-  ## All stats can have reply_to info
-  if stat['in_reply_to_status_id']:
-    repurl = u'http://twitter.com/%s/status/%s' % (
-     stat['in_reply_to_screen_name'],
-     stat['in_reply_to_status_id'], )
-  else:
-    repurl = u''
-  text = h.unescape(text) # "text" is in escaped HTML (XML?)
-  try:
-    import codecs
-    import re
-    text = re.sub(r'http://t.co/[a-zA-Z0-9_]+', expand_tco_url, text)
-    ## GMT time str to GMT time struct
-    tcreated = time.strptime(stat['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
-    ## GMT time struct to local epoch to local time
-    tcreated = time.localtime(time.mktime(tcreated) + toffset * 60 * 60)
-    archpath = time.strftime(archpath_template, tcreated)
-    output = codecs.getwriter('UTF-8')(open(archpath, 'a'))
-    output.write(u"%s\t%s\t%s\n" % (url, repurl, text,))
-    output.close()
-  except: # Maybe I/O exceptions
-    raise
-  else:
-    last_sid = sid
-    conf.set("DEFAULT", 'last_sid', '%d' % (last_sid,))
-    fail_count = 0
-    conf.set("DEFAULT", 'fail_count', '%d' % (fail_count,))
-    with open(conf_path, 'wb') as output:
-      conf.write(output)
+  (url, repurl, text,) = twitter_utils.format_fields(stat)
+  (text, dic,) = twitter_utils.expand_urls_in_text(text)
+  append_status_line(archpath_template,
+   url, repurl, text, stat['created_at'] )
+  last_sid = sid
+  conf.update_last_sid(last_sid)

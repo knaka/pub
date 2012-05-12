@@ -31,25 +31,6 @@
 <!-- ============================================================= -->
 
 <item>
-  <name>Chrome Option S Core</name>
-  <identifier vk_config="true">notsave.private.chrome_option_s_core</identifier>
-  <only>GOOGLE_CHROME</only>
-  <autogen>--KeyToKey--
-    KeyCode::S, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_s_core
-  </autogen>
-  <autogen>--KeyToKey--
-    KeyCode::ESCAPE, ModifierFlag::NONE,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_s_core
-  </autogen>
-  <autogen>--KeyToKey--
-    KeyCode::F, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::F, VK_COMMAND | ModifierFlag::NONE,
-    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_s_core
-  </autogen>
-</item>
-
-<item>
   <name>Chrome Option V Core</name>
   <identifier vk_config="true">notsave.private.chrome_option_v_core</identifier>
   <only>GOOGLE_CHROME</only>
@@ -60,6 +41,11 @@
   <autogen>--KeyToKey--
     KeyCode::R, VK_OPTION | ModifierFlag::NONE,
     KeyCode::R, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_v_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::O, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::U, VK_OPTION | VK_COMMAND | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_chrome_option_v_core
   </autogen>
 </item>
@@ -91,10 +77,6 @@
   <identifier>private.chrome</identifier>
   <only>GOOGLE_CHROME</only>
   <config_not>notsave.private.control_q_core</config_not>
-  <autogen>--KeyToKey--
-    KeyCode::S, VK_OPTION | ModifierFlag::NONE,
-    KeyCode::VK_CONFIG_FORCE_ON_notsave_private_chrome_option_s_core
-  </autogen>
   <autogen>--KeyToKey--
     KeyCode::V, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_chrome_option_v_core
@@ -292,6 +274,38 @@
 </item>
 
 <!-- ============================================================= -->
+<!-- Option S -->
+<!-- ============================================================= -->
+
+<item>
+  <name>Option S Core</name>
+  <identifier vk_config="true">notsave.private.option_s_core</identifier>
+  <autogen>--KeyToKey--
+    KeyCode::S, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_s_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::ESCAPE, ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_s_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::F, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::F, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_s_core
+  </autogen>
+</item>
+
+<item>
+  <name>Option S</name>
+  <identifier>private.option_s</identifier>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <autogen>--KeyToKey--
+    KeyCode::S, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_s_core
+  </autogen>
+</item>
+
+<!-- ============================================================= -->
 <!-- Option E -->
 <!-- ============================================================= -->
 
@@ -467,6 +481,19 @@
     KeyCode::CURSOR_RIGHT, ModifierFlag::COMMAND_L,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
   </autogen>
+  <block>
+    <only>WORD</only>
+    <autogen>--KeyToKey--
+      KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_LEFT, VK_COMMAND | ModifierFlag::FN | ModifierFlag::NONE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::C, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_RIGHT, VK_COMMAND | ModifierFlag::FN | ModifierFlag::NONE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::CURSOR_LEFT, ModifierFlag::FN | ModifierFlag::NONE,

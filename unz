@@ -22,7 +22,7 @@ cmds["cgz"] = cmds["cpio.gz"] = \
  "gzip -d -c %s | cpio --extract --make-directories --verbose"
 cmds["cpio"] = "cat %s | cpio --extract --make-directories --verbose"
 cmds["tbz"] = cmds["tar.bz2"] = "tar -x -v -f %s --bzip2"
-cmds["zip"] = cmds["ZIP"] = cmds["jar"] = cmds["xpi"] = cmds["egg"] = cmds["war"] = "unzip %s"
+cmds["zip"] = cmds["ZIP"] = cmds["jar"] = cmds["xpi"] = cmds["egg"] = cmds["war"] = cmds["crx"] = "unzip %s"
 cmds["tar.lzma"] = "tar Yxvf %s"
 cmds["tar.Z"] = "tar Zxvf %s"
 cmds["tar"] = cmds["gem"] = "tar xvf %s"
