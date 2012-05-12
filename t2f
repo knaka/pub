@@ -58,6 +58,8 @@ for stat in stats:
     continue
   if text[0] == "#":
     continue
+  if text.find("RT ") == 0:
+    continue
   if text[-1] == "\\":
     text_save = text_save + delim + text[:-1].strip()
     delim = "\n\n"
