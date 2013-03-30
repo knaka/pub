@@ -5,6 +5,8 @@ import sys
 import getopt
 import re
 
+# hoge
+
 if len(sys.argv) < 2:
   sys.exit(1)
 (opts, args) = getopt.getopt(sys.argv[1:], "t:", ["type="])
