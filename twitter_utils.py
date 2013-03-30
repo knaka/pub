@@ -3,6 +3,8 @@
 
 ### http://dev.twitter.com/doc
 
+uname = 'knaka'
+
 class Conf:
   FailCountThre = 20
   def __init__(self, conf_path):
@@ -47,10 +49,16 @@ class Conf:
 ## https://github.com/sixohsix/twitter/
 ## UTF-8 fix: https://github.com/knaka/twitter/
 import twitter
+import tauthinfo
+conskey = tauthinfo.conskey
+reqtok = tauthinfo.reqtoks[uname]
+oauth = twitter.oauth.OAuth(reqtok['id'], reqtok['secret'],
+ conskey['id'], conskey['secret'] )
 
 def get_statuses(uid):
-  stats = twitter.Twitter().statuses.user_timeline(id = uid,
-   include_rts = True)
+  t = twitter.Twitter(domain = 'api.twitter.com', api_version = '1.1',
+   auth = oauth )
+  stats = t.statuses.user_timeline(include_rts = True)
   stats.reverse() # Destructive
   return stats
 
@@ -105,8 +113,8 @@ def format_fields(stat):
      stat['in_reply_to_status_id'], )
   else:
     repurl = u''
-  text = text.replace("\n", " ")
   text = h.unescape(text) # "text" is in escaped HTML (XML?)
+  text = text.replace("\n", "<br/>")
   return (url, repurl, text,)
 
 if __name__ == '__main__':

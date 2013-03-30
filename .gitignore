@@ -4,3 +4,4 @@ t2f.conf
 fauthinfo.py*
 dm
 *~
+*.pyc

@@ -26,6 +26,21 @@
   <equal>com.vmware.fusion</equal>
 </appdef>
 
+<appdef>
+  <appname>JEDIT</appname>
+  <equal>org.gjt.sp.jedit</equal>
+</appdef>
+
+<appdef>
+  <appname>MI</appname>
+  <equal>net.mimikaki.mi</equal>
+</appdef>
+
+<appdef>
+  <appname>EMACS</appname>
+  <equal>org.gnu.Emacs</equal>
+</appdef>
+
 <!-- ============================================================= -->
 <!-- Chrome -->
 <!-- ============================================================= -->
@@ -127,6 +142,24 @@
 </item>
 
 <!-- ============================================================= -->
+<!-- MI -->
+<!-- ============================================================= -->
+
+<item>
+  <name>MI</name>
+  <identifier>private.mi</identifier>
+  <only>MI</only>
+  <autogen>--KeyToKey--
+    KeyCode::N, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::G, VK_COMMAND | ModifierFlag::NONE
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::P, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::G, VK_COMMAND | VK_SHIFT | ModifierFlag::NONE
+  </autogen>
+</item>
+
+<!-- ============================================================= -->
 <!-- Minimize and Maximize Screen -->
 <!-- ============================================================= -->
 
@@ -142,7 +175,7 @@
     </autogen>
   </block>
   <block>
-    <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+    <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
     <autogen>--KeyToKey--
       KeyCode::X, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
       KeyCode::F, VK_COMMAND | VK_CONTROL | ModifierFlag::NONE
@@ -210,7 +243,7 @@
 <item>
   <name>Option F Core</name>
   <identifier vk_config="true">notsave.private.option_f_core</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::F, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_f_core
@@ -266,7 +299,7 @@
 <item>
   <name>Option F</name>
   <identifier>private.option_f</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::F, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_f_core
@@ -293,12 +326,17 @@
     KeyCode::F, VK_COMMAND | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_s_core
   </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::R, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::F, VK_COMMAND | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_s_core
+  </autogen>
 </item>
 
 <item>
   <name>Option S</name>
   <identifier>private.option_s</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::S, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_s_core
@@ -312,7 +350,7 @@
 <item>
   <name>Option E Core</name>
   <identifier vk_config="true">notsave.private.option_e_core</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::E, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_e_core
@@ -377,10 +415,78 @@
 <item>
   <name>Option E</name>
   <identifier>private.option_e</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::E, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_e_core
+  </autogen>
+</item>
+
+<!-- ============================================================= -->
+<!-- Option M (for mi Macro?) -->
+<!-- ============================================================= -->
+
+<item>
+  <name>Option M Core</name>
+  <identifier vk_config="true">notsave.private.option_m_core</identifier>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
+  <autogen>--KeyToKey--
+    KeyCode::M, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_m_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::ESCAPE, ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_m_core
+  </autogen>
+  <!-- &Record -->
+  <autogen>--KeyToKey--
+    KeyCode::R, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::M, VK_CONTROL | VK_SHIFT | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_m_core
+  </autogen>
+</item>
+
+<item>
+  <name>Option M</name>
+  <identifier>private.option_m</identifier>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
+  <autogen>--KeyToKey--
+    KeyCode::M, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_m_core
+  </autogen>
+</item>
+
+<!-- ============================================================= -->
+<!-- Option W (for mi Window?) -->
+<!-- ============================================================= -->
+
+<item>
+  <name>Option W Core</name>
+  <identifier vk_config="true">notsave.private.option_w_core</identifier>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
+  <autogen>--KeyToKey--
+    KeyCode::W, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_w_core
+  </autogen>
+  <autogen>--KeyToKey--
+    KeyCode::ESCAPE, ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_w_core
+  </autogen>
+  <!-- &Dual &Duplicate -->
+  <autogen>--KeyToKey--
+    KeyCode::D, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::O, VK_CONTROL | VK_SHIFT | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_option_w_core
+  </autogen>
+</item>
+
+<item>
+  <name>Option W</name>
+  <identifier>private.option_w</identifier>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, EMACS</not>
+  <autogen>--KeyToKey--
+    KeyCode::W, VK_OPTION | ModifierFlag::NONE,
+    KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_w_core
   </autogen>
 </item>
 
@@ -391,7 +497,7 @@
 <item>
   <name>Control B Core</name>
   <identifier vk_config="true">notsave.private.control_b_core</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, JEDIT, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::G, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::FORWARD_DELETE,
@@ -462,7 +568,7 @@
 <item>
   <name>Control Q Core</name>
   <identifier vk_config="true">notsave.private.control_q_core</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, JEDIT, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::Q, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
@@ -494,6 +600,19 @@
       KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
     </autogen>
   </block>
+  <block>
+    <only>MI</only>
+    <autogen>--KeyToKey--
+      KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_UP, VK_COMMAND | ModifierFlag::NONE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::C, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_DOWN, VK_COMMAND | ModifierFlag::NONE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::R, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::CURSOR_LEFT, ModifierFlag::FN | ModifierFlag::NONE,
@@ -504,6 +623,19 @@
     KeyCode::CURSOR_RIGHT, ModifierFlag::FN | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
   </autogen>
+  <block>
+    <only>MI</only>
+    <autogen>--KeyToKey--
+      KeyCode::T, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_LEFT, VK_COMMAND | VK_SHIFT, KeyCode::DELETE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::Y, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_RIGHT, VK_COMMAND | VK_SHIFT, KeyCode::DELETE,
+      KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_q_core
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::T, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::DELETE, ModifierFlag::COMMAND_L,
@@ -519,7 +651,7 @@
 <item>
   <name>Control B Q Core</name>
   <identifier vk_config="true">notsave.private.control_b_q_core</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, JEDIT, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::Q, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_OFF_notsave_private_control_b_q_core,
@@ -563,7 +695,7 @@
 <item>
   <name>Diamond Cursor</name>
   <identifier>private.diamond_cursor</identifier>
-  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>TERMINAL, VIRTUALMACHINE, VMWARE_SINGLE, JEDIT, EMACS</not>
   <autogen>--KeyToKey--
     KeyCode::G, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::FORWARD_DELETE
@@ -572,10 +704,13 @@
     KeyCode::H, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::DELETE
   </autogen>
-  <autogen>--KeyToKey--
-    KeyCode::M, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::ENTER
-  </autogen>
+  <block>
+    <not>MI</not>
+    <autogen>--KeyToKey--
+      KeyCode::M, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::ENTER
+    </autogen>
+  </block>
   <autogen>--KeyToKey--
     KeyCode::V, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::V, VK_COMMAND,
@@ -628,13 +763,24 @@
     KeyCode::C, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::CURSOR_DOWN, ModifierFlag::FN | ModifierFlag::NONE
   </autogen>
+  <block>
+    <not>MI</not>
+    <autogen>--KeyToKey--
+      KeyCode::W, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_UP
+    </autogen>
+  </block>
+  <block>
+    <not>MI</not>
+    <autogen>--KeyToKey--
+      KeyCode::Z, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_DOWN
+    </autogen>
+  </block>
+  <!-- Undo -->
   <autogen>--KeyToKey--
-    KeyCode::W, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::CURSOR_UP
-  </autogen>
-  <autogen>--KeyToKey--
-    KeyCode::Z, VK_CONTROL | ModifierFlag::NONE,
-    KeyCode::CURSOR_DOWN
+    KeyCode::U, VK_CONTROL | ModifierFlag::NONE,
+    KeyCode::Z, VK_COMMAND | ModifierFlag::NONE
   </autogen>
   <autogen>--KeyToKey--
     KeyCode::B, VK_CONTROL | ModifierFlag::NONE,
@@ -644,7 +790,7 @@
     KeyCode::Q, VK_CONTROL | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_control_q_core
   </autogen>
-  <!-- Tab -->
+  <!-- Next/Previsou Tab -->
   <block>
     <only>EXCEL</only>
     <autogen>--KeyToKey--
@@ -658,6 +804,36 @@
     <autogen>--KeyToKey--
       KeyCode::TAB, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
       KeyCode::PAGEUP, VK_CONTROL | ModifierFlag::NONE
+    </autogen>
+  </block>    
+  <block>
+    <only>SKYPE</only>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::CURSOR_RIGHT, VK_COMMAND | VK_OPTION| ModifierFlag::NONE
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | VK_SHIFT | ModifierFlag::NONE,
+      KeyCode::CURSOR_LEFT, VK_COMMAND | VK_OPTION| ModifierFlag::NONE
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
+      KeyCode::CURSOR_LEFT, VK_COMMAND | VK_OPTION| ModifierFlag::NONE
+    </autogen>
+  </block>    
+  <block>
+    <only>MI</only>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | ModifierFlag::NONE,
+      KeyCode::BRACKET_RIGHT, VK_COMMAND | VK_SHIFT | ModifierFlag::NONE
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | VK_SHIFT | ModifierFlag::NONE,
+      KeyCode::BRACKET_LEFT, VK_COMMAND | VK_SHIFT | ModifierFlag::NONE
+    </autogen>
+    <autogen>--KeyToKey--
+      KeyCode::TAB, VK_CONTROL | VK_OPTION | ModifierFlag::NONE,
+      KeyCode::BRACKET_LEFT, VK_COMMAND | VK_SHIFT | ModifierFlag::NONE
     </autogen>
   </block>    
   <!-- Alternative for Shift-Control-TAB -->
@@ -700,7 +876,7 @@
 <item>
   <name>Option Space</name>
   <identifier>private.option_space</identifier>
-  <not>VIRTUALMACHINE, VMWARE_SINGLE</not>
+  <not>VIRTUALMACHINE, VMWARE_SINGLE, JEDIT</not>
   <autogen>--KeyToKey--
     KeyCode::SPACE, VK_OPTION | ModifierFlag::NONE,
     KeyCode::VK_CONFIG_FORCE_ON_notsave_private_option_space_core
@@ -708,8 +884,12 @@
 </item>
 
 <item>
-  <name>Play to Shift F8</name>
-  <identifier>private.play_shift_f8</identifier>
+  <name>Function Keys</name>
+  <identifier>private.fkeys</identifier>
+  <autogen>--KeyToKey--
+    KeyCode::EXPOSE_ALL, ModifierFlag::NONE,
+    KeyCode::EXPOSE_ALL, VK_COMMAND | ModifierFlag::NONE
+  </autogen>
   <autogen>--ConsumerToKey--
     ConsumerKeyCode::MUSIC_PLAY, ModifierFlag::NONE,
     KeyCode::F8, VK_SHIFT | ModifierFlag::NONE
